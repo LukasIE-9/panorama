@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PANORAMA Vocabulary Dictionary</title>
+  <style>
+  
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f0f2f5;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+}
+.container {
+  max-width: 800px;
+  width: 100%;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  font-size: 14px;
+  word-wrap: break-word;
+}
+th {
+  background: #fafafa;
+  font-weight: bold;
+}
+td:nth-child(2) {
+  width: 30%;
+}
+td:nth-child(3),
+td:nth-child(4),
+td:nth-child(5) {
+  width: 20%;
+}
+td:nth-child(1) {
+  width: 10%;
+}
+tr:hover {
+  background-color: #f1f1f1;
+}
+@media (max-width: 600px) {
+  th, td {
+    padding: 8px;
+    font-size: 12px;
+  }
+  h1 {
+    font-size: 20px;
+  }
+}
+
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>PANORAMA Vocabulary Dictionary</h1>
+  <input type="text" id="search" placeholder="Search by #, Word, Kanji, Meaning or Note...">
+  <table id="dictionary">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Word</th>
+        <th>Kanji</th>
+        <th>Meaning</th>
+        <th>Note</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>
+<script>
+
+const vocabulary = [
+  { "num": 1, "word": "Word1", "kanji": "Kanji1", "meaning": "Meaning1", "note": "Note1" },
+  { "num": 2, "word": "Word2", "kanji": "Kanji2", "meaning": "Meaning2", "note": "Note2" },
+  { "num": 3, "word": "Word3", "kanji": "Kanji3", "meaning": "Meaning3", "note": "Note3" },
+  { "num": 4, "word": "Word4", "kanji": "Kanji4", "meaning": "Meaning4", "note": "Note4" }
+  // You can expand this manually or dynamically load if needed
+];
+
+const tbody = document.querySelector("#dictionary tbody");
+const searchInput = document.getElementById("search");
+
+function createRow(entry) {
+  const row = document.createElement('tr');
+  row.innerHTML = `
+    <td>${entry.num}</td>
+    <td>${entry.word}</td>
+    <td>${entry.kanji}</td>
+    <td>${entry.meaning}</td>
+    <td>${entry.note || ''}</td>
+  `;
+  return row;
+}
+
+function renderTable(data) {
+  const fragment = document.createDocumentFragment();
+  data.forEach(entry => fragment.appendChild(createRow(entry)));
+  tbody.innerHTML = "";
+  tbody.appendChild(fragment);
+}
+
+function filterTable() {
+  const term = searchInput.value.toLowerCase();
+  const filtered = vocabulary.filter(entry =>
+    entry.num.toString().includes(term) ||
+    (entry.word && entry.word.toLowerCase().includes(term)) ||
+    (entry.kanji && entry.kanji.includes(term)) ||
+    (entry.meaning && entry.meaning.toLowerCase().includes(term)) ||
+    (entry.note && entry.note.toLowerCase().includes(term))
+  );
+  renderTable(filtered);
+}
+
+searchInput.addEventListener("input", filterTable);
+
+// Initial render
+renderTable(vocabulary);
+
+</script>
+</body>
+</html>
