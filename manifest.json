@@ -1,0 +1,16 @@
+
+{
+  "name": "Panorama",
+  "short_name": "Panorama",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#D32F2F",
+  "theme_color": "#D32F2F",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
